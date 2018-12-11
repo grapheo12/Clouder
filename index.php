@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-if (isset($_SESSION["login"] && $_SESSION["login"] == "y" && isset($_COOKIE["username"])){
+if (isset($_SESSION["login"]) && $_SESSION["login"] == "y" && isset($_COOKIE["username"])){
     mysql_connect("localhost", "root", "") or die(mysql_error());
     mysql_select_db("userbase");
     $query = "SELECT * FROM active WHERE username='".$_COOKIE["username"]."';";
