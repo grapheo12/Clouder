@@ -1,13 +1,15 @@
 <?php 
 session_start();
 
-if ($_SESSION["login"] == "y" && $_COOKIE["username"] != NULL){
+if (isset($_SESSION["login"] && $_SESSION["login"] == "y" && isset($_COOKIE["username"])){
     mysql_connect("localhost", "root", "") or die(mysql_error());
     mysql_select_db("userbase");
     $query = "SELECT * FROM active WHERE username='".$_COOKIE["username"]."';";
     $rs = mysql_query($query);
-    if ($rs["ip"] == $_SERVER["REMOTE_ADDR"]){
-        header("feed.php");
+    while ($row = mysql_fetch_array($rs)){
+        if (isset($row) && $row["ip"] == $_SERVER["REMOTE_ADDR"]){
+            header("feed.php");
+        }
     }
 }
 ?>
