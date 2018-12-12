@@ -10,6 +10,7 @@ if (isset($_COOKIE["username"])){
     $rs = mysqli_query($conn, $query);
     while ($row = mysqli_fetch_assoc($rs)){
         if (isset($row) && $row["ip"] == $_SERVER["REMOTE_ADDR"]){
+            $_SESSION["login"] = $row["Id"];
             header("Location: feed.php");
         }
     }
@@ -53,7 +54,7 @@ if (isset($_COOKIE["username"])){
                 <input class="form-control" type="text" name="Name" placeholder="Full Name"><br>
                 <input class="form-control" type="text" name="username" placeholder="Pick a Username"><br>
                 <input class="form-control" type="password" name="pwd" placeholder="Give a strong password"><br>
-                <div id="signupbtn" class="btn btn-primary">Sign Up</div>
+                <div id="signupbtn" class="btn btn-primary">Sign Up</div><br><br>
                 <div id="signupmsg"></div>
             </div>
         </fieldset>
@@ -93,6 +94,32 @@ if (isset($_COOKIE["username"])){
                         });
                     }
                 });
+                $('#signupbtn').click(function(){
+                    var inps = $('#signupdiv input');
+                    if (inps[0].value == "" || inps[1].value == "" || inps[2].value == ""){
+                        $('#signupmsg').removeClass('alert alert-danger alert-success');
+                        $('#signupmsg').addClass('alert');
+                        $('#signupmsg').addClass('alert-danger');
+                        $('#signupmsg').html("All fields are mandatory.");
+                    }
+                    else{
+                        var postdict = {method: 'signup', username: inps[1].value, password: inps[2].value, name: inps[0].value};
+                        $.post("formhandler.php", postdict, function(response, status){
+                            if (response == "Ok"){
+                                $('#signupmsg').removeClass('alert alert-danger alert-success');
+                                $('#signupmsg').addClass('alert');
+                                $('#signupmsg').addClass('alert-success');
+                                $('#signupmsg').html("SignUp Successful! Login please");
+                            }else{
+                                $('#signupmsg').removeClass('alert alert-danger alert-success');
+                                $('#signupmsg').addClass('alert');
+                                $('#signupmsg').addClass('alert-danger');
+                                $('#signupmsg').html("Something went wrong! Please try again.");
+                            }
+                        });
+                    }
+                });
+
 
             });
 
