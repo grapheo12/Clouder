@@ -3,6 +3,7 @@
 Site uses XAMPP.
 Create a Database named 'userbase' with user 'root' and no password (ie default settings).
 Then add the following tables:
+
     1. profile
     |- Id : int Primary Key Auto Increment
     |- username: text
@@ -20,6 +21,7 @@ Then add the following tables:
     |- username: text
     |- ip: text
     |- intime: bigint
+
 Then clone normally and run using XAMPP.
 
 PUSHING ADVICE

@@ -67,7 +67,7 @@ while ($row = mysqli_fetch_assoc($rs)){
             });
         </script>
     </div>
-    <div class="row bg-dark py-1" id="feed">
+    <div class="row bg-dark py-3" id="feed">
             <?php
                 $q = "SELECT MAX(Id) FROM post";
                 $rs = mysqli_query($conn, $q);
