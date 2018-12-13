@@ -36,3 +36,4 @@ TO-DO LIST
     3. Make provision for post editing so that use of raw html in the posts can be disabled.
     4. Improve the security of the site.
     5. Make provision for addition of profile-photo or avatar.
+    6. Make provision for AJAX update of feed.
