@@ -39,6 +39,57 @@ while ($row = mysqli_fetch_assoc($rs)){
       <a class="nav-item nav-link btn btn-outline-danger mr-3" href="logout.php">Log Out</a>
     </div>
     </nav>
-    
+    <div class="jumbotron mx-auto bg-dark text-light">
+        <p class="display-4">Write a new post</p>
+        <p>Regular HTML, CSS and Bootstrap formatting is allowed. Site is still vulnerable to XSS.</p>
+        <textarea class="form-control" placeholder="Write anything here........" height=40 width=60 id="posttxt"></textarea><br>
+        <div class="btn btn-outline-success" id="postbtn">Post!</div><br><br>
+        <div id="postmsg" class="alert" style="display: none;"></div>
+        <script>
+            $('document').ready(function(){
+                $('#postbtn').click(function(){
+                    $.post("post.php", {postcontent: $('#posttxt').val()}, function(response, status){
+                        if (response == "Ok"){
+                            $('#postmsg').show();
+                            $('#postmsg').removeClass('alert-danger alert-success');
+                            $('#postmsg').addClass('alert-success');
+                            $('#postmsg').html("Posted Successfully!");
+                            $('#postmsg').fadeOut(2000);
+                        }else{
+                            $('#postmsg').show();
+                            $('#postmsg').removeClass('alert-danger alert-success');
+                            $('#postmsg').addClass('alert-danger');
+                            $('#postmsg').html("Oops! Something went wrong. Please try again!");
+                            $('#postmsg').fadeOut(2000);
+                        }
+                    });
+                });
+            });
+        </script>
+    </div>
+    <div class="row bg-dark py-1" id="feed">
+            <?php
+                $q = "SELECT MAX(Id) FROM post";
+                $rs = mysqli_query($conn, $q);
+                $row = mysqli_fetch_assoc($rs);
+                $_SESSION["feed_pos"] = $row["MAX(Id)"];
+
+                $q = "SELECT link FROM post ORDER BY Id DESC LIMIT 10";
+                $rs = mysqli_query($conn, $q);
+
+                while ($row = mysqli_fetch_assoc($rs)){
+                    $fp = fopen($row["link"], "r") or die("error");
+                    echo fgets($fp);
+                    fclose($fp);
+                }
+            ?>
+            <script>
+                $('document').ready(function(){
+                    $('#feed').children().addClass("jumbotron bg-white");
+                });
+            </script>
+    </div>
+
+                        
 </body>
 </html>
