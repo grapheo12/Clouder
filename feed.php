@@ -1,4 +1,5 @@
 <?php
+//Author
 session_start();
 if (!isset($_SESSION["login"]) || !isset($_COOKIE["username"])){
     header("Location:index.php");
