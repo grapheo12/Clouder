@@ -1,5 +1,5 @@
 [IMPORTANT!]CLONING GUIDE
-==============================
+==========================
 Site uses XAMPP.
 Create a Database named 'userbase' with user 'root' and no password (ie default settings).
 Then add the following tables:
